@@ -5,7 +5,7 @@ import kotlin.random.Random
 fun main() {
     val numLetters = "Mississippi".count { it == 's' }
     println("numLetters = $numLetters")
-    //5-1匿名寒士
+    //5-1匿名函式
     println({
         val currentYear = 2023
         "Welcome to SimVillage, Mayor! (copyright $currentYear)"
