@@ -1,5 +1,6 @@
 package c10
 
+import c11.performPurchase
 import c7.placeOrder
 import java.io.File
 
@@ -69,7 +70,7 @@ fun placeOrder(patronName: String, menuData: String) {
     val (type, name, price) = menuData.split(',')
     val message = "$patronName buys a $name ($type) for $price."
     println(message)
-// performPurchase(price.toDouble()) performPurchase(price.toDouble())
+    performPurchase(price.toDouble(), patronName)
     val phrase = if (name == "Dragon's Breath") {
         "$patronName exclaims: ${toDragonSpeak("Ah, delicious $name!")}"
     } else {
