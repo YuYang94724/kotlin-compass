@@ -68,7 +68,7 @@ private fun toDragonSpeak(phrase: String): String {
 //}
 
 
-fun placeOrder(menuData: String) {
+public fun placeOrder(menuData: String) {
     val indexOfApostrophe = TAVERN_NAME.indexOf('\'')
     val tavernMaster = TAVERN_NAME.substring(0 until indexOfApostrophe)
     println("Madrigal speaks with $tavernMaster about their order.")
