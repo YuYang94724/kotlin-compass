@@ -1,13 +1,14 @@
 package c13
 
 import c15.Coordinate
+import c16.Fightable
 import java.io.File
 import java.util.*
 
 class Player (_name: String,
-              var healthPoints: Int = 100,
+              override var healthPoints: Int = 100,
               val isBlessed: Boolean,
-              private val isImmortal: Boolean) {
+              private val isImmortal: Boolean) : Fightable {
     var name = _name
         get() = replaceFirst(field) + " of $hometown"
         set(value) {
@@ -20,11 +21,14 @@ class Player (_name: String,
     val hometown by lazy {selectHometown()}
     var currentPosition = Coordinate(0, 0)
 
-    private fun selectHometown() = File("data/towns.txt")
+    private fun selectHometown() = File("data${File.separator}towns.txt")
         .readText()
         .split("\n")
         .shuffled()
         .first()
+
+    override val diceCount = 3
+    override val diceSides = 6
 
     lateinit var alignment: String
     fun determineFate() {
@@ -74,6 +78,16 @@ class Player (_name: String,
         weapon?.also {
             println(it.name)
         }
+    }
+
+    override fun attack(opponent: Fightable): Int {
+        val damageDealt = if (isBlessed) {
+            damageRoll * 2
+        } else {
+            damageRoll
+        }
+        opponent.healthPoints -= damageDealt
+        return damageDealt
     }
 }
 

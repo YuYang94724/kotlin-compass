@@ -1,12 +1,15 @@
-package c15
+package c16
 
 import c13.Player
-import c13.printPlayerStatus
 import c14.Room
 import c14.TownSquare
+import c15.Coordinate
+import c15.Direction
 import java.util.*
+import kotlin.system.exitProcess
 
 var notEnd = true
+
 fun main() {
     Game.play()
 }
@@ -18,7 +21,7 @@ object Game {
         listOf(currentRoom, Room("Tavern"), Room("Back Room")),
         listOf(Room("Long Corridor"), Room("Generic Room")))
     init {
-        println("Welcome, adventurer.")
+        println("Welcome, adventurer. ${player.name}")
         player.castFireball()
     }
 
@@ -34,7 +37,7 @@ object Game {
             println(GameInput(readLine()).processCommand())
         }
     }
-    private fun printPlayerStatus(player: Player) {
+    fun printPlayerStatus(player: Player) {
         println(
             "(Aura: ${player.auraColor()}) " +
                     "(Blessed: ${if (player.isBlessed) "YES" else "NO"})"
@@ -100,6 +103,26 @@ object Game {
             "Invalid direction: [$directionInput]."
         }
 
+    private fun fight() = currentRoom.monster?.let {
+        while (player.healthPoints > 0 && it.healthPoints > 0){
+            slay(it)
+            Thread.sleep(1000)
+        }
+        "Combat complete. "
+    } ?: "There's nothing here to fight."
+
+    private fun slay(monster: Monster) {
+        println("${monster.name} did ${monster.attack(player)} damage!")
+        println("${player.name} did ${player.attack(monster)} damage!")
+        if (player.healthPoints <= 0) {
+            println(">>>> You have been defeated! Thanks for playing. <<<<")
+            exitProcess(0)
+        }
+        if (monster.healthPoints <= 0) {
+            println(">>>> ${monster.name} has been defeated! <<<<")
+            currentRoom.monster = null
+        }
+    }
     private class GameInput(arg: String?){
         private val input = arg ?: ""
 
@@ -108,6 +131,7 @@ object Game {
 
         fun processCommand() = when(command.lowercase(Locale.getDefault())) {
             "move" -> move(argument)
+            "fight" -> fight()
             "exit", "quit" -> endGame()
             "map" -> printWhereAmI(player)
             "ring" -> canRing(player)
@@ -116,14 +140,4 @@ object Game {
 
         private fun commandNotFound() = "I'm not quite sure what you're trying to do!"
     }
-}
-
-fun printIsSourceOfBlessings(any: Any) {
-    val isSourceOfBlessings = if (any is Player) {
-        any.isBlessed
-    } else {
-        (any as Room).name == "Fount of Blessings"
-    }
-
-    println("$any is a source of blessings: $isSourceOfBlessings")
 }

@@ -1,8 +1,14 @@
 package c14
 
+import c16.Goblin
+import c16.Monster
+
 open class Room(val name: String) {
     protected open val dangerLevel = 5
-    fun description() = "Room: $name\nDanger level: $dangerLevel"
+    var monster: Monster? = Goblin()
+    fun description() = "Room: $name\n" +
+            "Danger level: $dangerLevel\n" +
+            "Creature: ${monster?.description ?: "none."}"
     open fun load() = "Nothing much to see here..."
 }
 
