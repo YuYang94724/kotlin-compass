@@ -1,5 +1,6 @@
 package c13
 
+import c15.Coordinate
 import java.io.File
 import java.util.*
 
@@ -16,8 +17,8 @@ class Player (_name: String,
     private fun replaceFirst(name: String) = name.replaceFirstChar {
         if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
     }
-
     val hometown by lazy {selectHometown()}
+    var currentPosition = Coordinate(0, 0)
 
     private fun selectHometown() = File("data/towns.txt")
         .readText()

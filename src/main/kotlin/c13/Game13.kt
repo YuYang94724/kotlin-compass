@@ -20,7 +20,7 @@ fun main() {
     player.printWeaponName()
 }
 
-private fun printPlayerStatus(player: Player) {
+fun printPlayerStatus(player: Player) {
     println(
         "(Aura: ${player.auraColor()}) " +
                 "(Blessed: ${if (player.isBlessed) "YES" else "NO"})"
