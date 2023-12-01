@@ -2,6 +2,7 @@ package c13
 
 import c15.Coordinate
 import c16.Fightable
+import c18.random as random18
 import java.io.File
 import java.util.*
 
@@ -24,8 +25,7 @@ class Player (_name: String,
     private fun selectHometown() = File("data${File.separator}towns.txt")
         .readText()
         .split("\n")
-        .shuffled()
-        .first()
+        .random18()
 
     override val diceCount = 3
     override val diceSides = 6

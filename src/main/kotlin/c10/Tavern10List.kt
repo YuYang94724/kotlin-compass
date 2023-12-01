@@ -72,7 +72,8 @@ fun placeOrder(patronName: String, menuData: String) {
     println(message)
     performPurchase(price.toDouble(), patronName)
     val phrase = if (name == "Dragon's Breath") {
-        "$patronName exclaims: ${toDragonSpeak("Ah, delicious $name!")}"
+//        "$patronName exclaims: ${toDragonSpeak("Ah, delicious $name!")}"
+        "$patronName exclaims: ${"Ah, delicious $name!".toDragonSpeak()}"
     } else {
         "Madrigal says: Thanks for the $name."
         "$patronName says: Thanks for the $name."
@@ -80,8 +81,21 @@ fun placeOrder(patronName: String, menuData: String) {
     println(phrase)
 }
 
-private fun toDragonSpeak(phrase: String): String {
-    return phrase.map {
+//private fun toDragonSpeak(phrase: String): String {
+//    return phrase.map {
+//        when (it.lowercaseChar()) {
+//            'a' -> "4"
+//            'e' -> "3"
+//            'i' -> "1"
+//            'o' -> "0"
+//            'u' -> "|_|"
+//            else -> it.toString()
+//        }
+//    }.joinToString("")
+//}
+//擴展函數
+private fun String.toDragonSpeak(): String {
+    return this.map {
         when (it.lowercaseChar()) {
             'a' -> "4"
             'e' -> "3"

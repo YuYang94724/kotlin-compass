@@ -1,6 +1,7 @@
 package c11
 
 import c10.*
+import c18.random as random18
 import java.io.File
 
 //var uniquePatrons = mutableSetOf<String>()
@@ -15,8 +16,8 @@ val patronGold = mutableMapOf<String, Double>()
 val patronList = mutableListOf("Eli", "Mordoc", "Sophie")
 fun main() {
     (0..9).forEach {
-        val first = patronList.shuffled().first()
-        val last = lastName.shuffled().first()
+        val first = patronList.random18()
+        val last = lastName.random18()
         val name = "$first $last"
         uniquePatrons += name
     }

@@ -4,6 +4,7 @@ import c13.Player
 import c13.printPlayerStatus
 import c14.Room
 import c14.TownSquare
+import c18.configurePitGoblin
 import java.util.*
 
 var notEnd = true
@@ -20,6 +21,10 @@ object Game {
     init {
         println("Welcome, adventurer.")
         player.castFireball()
+        currentRoom.configurePitGoblin {goblin ->
+            goblin.healthPoints = dangerLevel * 3
+            goblin
+        }
     }
 
     fun play() {
