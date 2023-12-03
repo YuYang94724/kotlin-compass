@@ -8,23 +8,27 @@ import java.io.File
 val menuList = File("data/tavern-menu-items.txt")
     .readText()
     .split("\n")
-//val patronGold = mapOf("Eli" to 10.5, "Mordoc" to 8.0, "Sophie" to 5.5)
-//val patronGold = mapOf(Pair("Eli", 10.75),
-//    Pair("Mordoc", 8.00),
-//    Pair("Sophie", 5.50))
-val patronGold = mutableMapOf<String, Double>()
+
 val patronList = mutableListOf("Eli", "Mordoc", "Sophie")
+val uniquePatrons: Set<String> = generateSequence {
+    val first = patronList.random()
+    val last = lastName.random()
+    "$first $last"
+}.distinct().take(9).toSet()
+
+var patronGold = uniquePatrons.map { Pair(it, 6.0) }.toMap().toMutableMap()
 fun main() {
-    (0..9).forEach {
-        val first = patronList.random18()
-        val last = lastName.random18()
-        val name = "$first $last"
-        uniquePatrons += name
-    }
-//    println(uniquePatrons)
-    uniquePatrons.forEach {
-        patronGold[it] = 6.0
-    }
+//    (0..9).forEach {
+//        val first = patronList.random18()
+//        val last = lastName.random18()
+//        val name = "$first $last"
+//        uniquePatrons += name
+//    }
+    println("size = ${uniquePatrons.size} , $uniquePatrons")
+    println("size = ${patronGold.size} , $patronGold")
+//    uniquePatrons.forEach {
+//        patronGold[it] = 6.0
+//    }
     var orderCount = 0
     while (orderCount <= 9) {
         placeOrder(uniquePatrons.shuffled().first(),
@@ -49,6 +53,7 @@ fun performPurchase(price: Double, patronName: String) {
     val totalPurse = patronGold.getValue(patronName)
     if (totalPurse - price >= 0.0) {
         patronGold[patronName] = totalPurse - price
+
     }else{
         println("Insufficient funds for $patronName to purchase for $price")
     }
