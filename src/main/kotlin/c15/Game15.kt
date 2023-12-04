@@ -60,29 +60,40 @@ object Game {
 
     //印地圖
     private fun printWhereAmI(player: Player): String {
-        val xLen = worldMap[0].size
-        val yLen = worldMap[1].size
-        val xArray = mutableListOf<String>()
-        val yArray = mutableListOf<String>()
-        for (i in 1..xLen){
-            xArray += "0"
+        val mapList = worldMap.mapIndexed { y, row ->
+            row.mapIndexed { x, room ->
+                if (player.currentPosition.x == x && player.currentPosition.y == y) "X" else "0"
+            }.joinToString(" ")
         }
-        for (i in 1..yLen){
-            yArray += "0"
-        }
-        val mapList = listOf(xArray,yArray)
-        mapList[player.currentPosition.x][player.currentPosition.y] = "X"
-        var  mapString = ""
-        mapList.forEachIndexed { index, it ->
-            it.forEach {
-                mapString += "$it "
-            }
-            if (mapList.size-1 != index){
-                mapString+="\n"
-            }
-        }
-        return mapString
+        return mapList.joinToString("\n")
     }
+
+    //印地圖
+//    private fun printWhereAmI(player: Player): String {
+//        val xLen = worldMap[0].size
+//        val yLen = worldMap[1].size
+//        val xArray = mutableListOf<String>()
+//        val yArray = mutableListOf<String>()
+//        for (i in 1..xLen){
+//            xArray += "0"
+//        }
+//        for (i in 1..yLen){
+//            yArray += "0"
+//        }
+//        val mapList = listOf(xArray,yArray)
+//        mapList[player.currentPosition.x][player.currentPosition.y] = "X"
+//        var  mapString = ""
+//        mapList.forEachIndexed { index, it ->
+//            it.forEach {
+//                mapString += "$it "
+//            }
+//            if (mapList.size-1 != index){
+//                mapString+="\n"
+//            }
+//        }
+//        return mapString
+//    }
+
 
     private fun endGame(): String {
         notEnd = false
