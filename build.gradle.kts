@@ -5,7 +5,9 @@ plugins {
 
 group = "kotlin.travel"
 version = "1.0-SNAPSHOT"
-
+sourceSets.main {
+    java.srcDirs("src/main/kotlin")
+}
 repositories {
     mavenCentral()
 }
